@@ -47,29 +47,36 @@
 		</div>
 		<h2>All results</h2>
 		<div class="table-responsive">
-			<table class="table" id="scoreTable">
-				<c:forEach items="${scores}" var="score">
+			<table class="table">
+				<thead>
 					<tr>
-						<td>${score.getUser().getName()}</td>
-						<td>${score.getScore()}</td>
-						<td>${score.getTimeStamp().toString()}</td>
-						<td><button class="btn btn-danger btn-sm"
-								onclick="deleteUser(<c:out value="${score.getUser().getId()}" />)">DELETE</button></td>
+						<th>Name</th>
+						<th>Score</th>
+						<th>Date</th>
+						<th></th>
 					</tr>
-				</c:forEach>
+				</thead>
+				<tbody id="scoreTable">
+					<c:forEach items="${scores}" var="score">
+						<tr>
+							<td>${score.getUser().getName()}</td>
+							<td>${score.getScore()}</td>
+							<td>${score.getTimeStamp().toString()}</td>
+							<td><button class="btn btn-danger btn-sm"
+									onclick="deleteScore(<c:out value="${score.getUser().getId()}" />)">DELETE</button></td>
+						</tr>
+					</c:forEach>
+				</tbody>
 			</table>
 		</div>
 	</div>
 	<script type="text/javascript">
 	
-		function deleteUser(id) {
-			$.ajax({
-			    url: 'scores',
-			    type: 'DELETE',
-			    data: { 'scoreId': id },
-			    success: function(data) {
-			    	$("#scoreTable").html(data);
-			    }
+		function deleteScore(id) {
+			$.post("admin", {
+				scoreId : id
+			}, function(data) {
+				$("#scoreTable").html(data);
 			});
 		}
 	

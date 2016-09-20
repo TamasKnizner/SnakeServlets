@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.epam.training.snake.entity.Score;
@@ -64,6 +65,15 @@ public class ScoreManager {
         scores.add(score);
         return true;
     }
+    
+    public static void deleteScore(Integer scoreId) {
+    	for (Iterator<Score> it = scores.listIterator(); it.hasNext();) {
+    	    Score score = it.next();
+    	    if (scoreId.equals(score.getId())) {
+    	        it.remove();
+    	    }
+    	}
+    }
 
     public static List<Score> getScoresByUser(User user) {
         List<Score> userScores = new ArrayList<>();
@@ -76,7 +86,32 @@ public class ScoreManager {
     }
 
     public static Integer getNewId() {
-        return scores.size() + 1;
+        return scores.get(scores.size()-1).getId()+1;
+    }
+    
+    public static String buildScoreTable(User user, boolean isAdmin) {
+    	StringBuilder sb = new StringBuilder("");
+        List<Score> scores = (isAdmin) ? getScores() : getScoresByUser(user);
+        for (Score score : scores) {
+            sb.append(buildRow(score, isAdmin));
+        }
+        return sb.toString();
+    }
+    
+    private static String buildRow(Score score, boolean isAdmin) {
+    	StringBuilder sb = new StringBuilder("");
+    	sb.append("<tr><td>");
+        sb.append(score.getUser().getName());
+        sb.append("</td><td>");
+        sb.append(score.getScore());
+        sb.append("</td><td>");
+        sb.append(score.getTimeStamp().toString());
+        sb.append("</td>");
+        if(isAdmin) {
+        	sb.append("<td><button class='btn btn-danger btn-sm' onclick='deleteScore(" + score.getId() + ")'>DELETE</button></td>");
+        }
+        sb.append("</tr>");
+    	return sb.toString();
     }
 
 }
