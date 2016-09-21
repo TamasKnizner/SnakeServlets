@@ -122,7 +122,13 @@ public class ScoreManager {
 
     public static List<Score> getTopTen() {
         scores.sort((s1, s2) -> s2.getScore() - s1.getScore());
-        return scores.subList(0, 10);
+        List<Score> topten = new ArrayList<>();
+        if (scores.size() < 10) {
+            topten = scores;
+        } else {
+            topten = scores.subList(0, 10);
+        }
+        return topten;
     }
 
 }
