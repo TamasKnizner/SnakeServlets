@@ -25,7 +25,7 @@ public class ScoreServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = getUser(request);
-        String score = request.getParameter("score");
+        Integer score = Integer.parseInt((String) request.getParameter("score"));
         boolean isAdmin = SessionManager.isAdmin(request);
         LOGGER.info("POST, isAdmin: {}, user: {}, score: {}", isAdmin, user.toString(), score);
         ScoreManager.addScore(new Score(ScoreManager.getNewId(), user, score, LocalDate.now()));

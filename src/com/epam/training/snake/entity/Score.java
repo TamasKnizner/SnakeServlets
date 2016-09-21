@@ -12,10 +12,10 @@ public class Score implements Serializable {
     private Integer score;
     private LocalDate timeStamp;
 
-    public Score(Integer id, User user, String score, LocalDate timeStamp) {
+    public Score(Integer id, User user, Integer score, LocalDate timeStamp) {
         this.id = id;
         this.user = user;
-        this.score = Integer.parseInt(score);
+        this.score = score;
         this.timeStamp = timeStamp;
     }
 
@@ -61,12 +61,12 @@ public class Score implements Serializable {
             return false;
         return true;
     }
-    
-    public Integer getId() {
-		return id;
-	}
 
-	public LocalDate getTimeStamp() {
+    public Integer getId() {
+        return id;
+    }
+
+    public LocalDate getTimeStamp() {
         return timeStamp;
     }
 

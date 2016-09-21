@@ -36,13 +36,13 @@
 			<div class="form-group">
 				<div class="col-md-8">
 					<input type="email" class="form-control" id="inputEmail"
-						placeholder="Email" name="email">
+						placeholder="Email" name="email" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-8">
 					<input type="password" class="form-control" id="inputPassword"
-						placeholder="Password" name="password">
+						placeholder="Password" name="password" required>
 				</div>
 			</div>
 			<div class="form-group">

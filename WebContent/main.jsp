@@ -38,7 +38,7 @@
 		<div class="form-inline">
 			<div class="form-group">
 				<input type="number" class="form-control" id="score" name="score"
-					placeholder="Score">
+					placeholder="Score" max="2000000000" min="0">
 			</div>
 			<button id="submitButton" class="btn btn-primary">Save</button>
 		</div>
