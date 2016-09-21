@@ -7,23 +7,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.epam.training.snake.util.UserManager;
 
 public class LoginServlet extends HttpServlet {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServlet.class);
+
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("LoginServlet.doGet()");
+        LOGGER.info("GET");
         request.getRequestDispatcher("/login.jsp").include(request, response);
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("LoginServlet.doPost()");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println(email + " " + password);
+        LOGGER.info("POST, email: {}, password: {}", email, password);
         String redirectURI = request.getContextPath();
         if (UserManager.validateLogin(email, password)) {
             if ("admin@admin.com".equals(email)) {

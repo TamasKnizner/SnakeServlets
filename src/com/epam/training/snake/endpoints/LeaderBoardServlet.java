@@ -10,18 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.epam.training.snake.util.SessionManager;
+import com.epam.training.snake.util.ScoreManager;
 
-public class LogoutServlet extends HttpServlet {
+public class LeaderBoardServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LogoutServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LeaderBoardServlet.class);
 
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOGGER.info("GET");
-        SessionManager.logout(request);
-        request.getRequestDispatcher("/").forward(request, response);
+        request.setAttribute("topten", ScoreManager.getTopTen());
+        request.getRequestDispatcher("/leaderboard.jsp").include(request, response);
     }
 
 }

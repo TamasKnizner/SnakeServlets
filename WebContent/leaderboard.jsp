@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Admin</title>
+<title>Leaderboard</title>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"
 	integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
 	crossorigin="anonymous"></script>
@@ -33,65 +33,31 @@
 	</nav>
 	<div class="container">
 		<div class="jumbotron">
-			<h1>MAIN</h1>
+			<h1>Leaderboard</h1>
 		</div>
-		<div class="form-inline">
-			<div class="form-group">
-				<select id="userSelect" name="user" class="form-control">
-					<c:forEach items="${users}" var="user">
-						<option value="<c:out value="${user.getId()}" />">${user.getName()}</option>
-					</c:forEach>
-				</select>
-			</div>
-			<div class="form-group">
-				<input type="number" class="form-control" id="score" name="score" placeholder="Score">
-			</div>
-			<button id="submitButton" class="btn btn-primary">Save</button>
-		</div>
-		<h2>All results</h2>
+		<h2>TOP 10</h2>
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
 					<tr>
+						<th>Rank</th>
 						<th>Name</th>
 						<th>Score</th>
 						<th>Date</th>
-						<th></th>
 					</tr>
 				</thead>
-				<tbody id="scoreTable">
-					<c:forEach items="${scores}" var="score">
+				<tbody>
+					<c:forEach items="${topten}" var="score" varStatus="loopCounter">
 						<tr>
+							<td><c:out value="${loopCounter.count}"/></td>
 							<td>${score.getUser().getName()}</td>
 							<td>${score.getScore()}</td>
 							<td>${score.getTimeStamp().toString()}</td>
-							<td><button class="btn btn-danger btn-sm" onclick="deleteScore(<c:out value="${score.getUser().getId()}" />)">DELETE</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 	</div>
-	<script type="text/javascript">
-	
-		function deleteScore(id) {
-			$.post("admin", {
-				scoreId : id
-			}, function(data) {
-				$("#scoreTable").html(data);
-			});
-		}
-	
-		$(document).ready(function() {
-			$('#submitButton').on("click", function(event) {
-				$.post("scores", {
-					score : $("#score").val(),
-					id : $( "#userSelect option:selected" ).val()
-				}, function(data) {
-					$("#scoreTable").html(data);
-				});
-			});
-		});
-	</script>
 </body>
 </html>

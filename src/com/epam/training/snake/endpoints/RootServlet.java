@@ -7,18 +7,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.epam.training.snake.util.SessionManager;
 
 public class RootServlet extends HttpServlet {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RootServlet.class);
+
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("RootServlet.doGet()");
         String redirectURL = "/";
-        System.out.println("Logged In: " + SessionManager.isLoggedIn(request));
-        if (SessionManager.isLoggedIn(request)) {
-            if (SessionManager.isAdmin(request)) {
+        boolean isAdmin = SessionManager.isAdmin(request);
+        boolean loggedIn = SessionManager.isLoggedIn(request);
+        LOGGER.info("GET, loggedIn: {}, isAdmin: {}", loggedIn, isAdmin);
+        if (loggedIn) {
+            if (isAdmin) {
                 redirectURL += "admin";
             } else {
                 redirectURL += "main";

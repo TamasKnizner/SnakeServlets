@@ -9,9 +9,14 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.epam.training.snake.entity.User;
 
 public class UserManager {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserManager.class);
 
     private static List<User> users = new ArrayList<>();
 
@@ -27,9 +32,9 @@ public class UserManager {
             oos.flush();
             oos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         } finally {
-            System.out.println("Users saved to users.ser");
+            LOGGER.info("Users saved to users.ser");
         }
     }
 
@@ -45,21 +50,22 @@ public class UserManager {
             users = (ArrayList<User>) (ois.readObject());
             ois.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         } finally {
-            System.out.println("Users loaded from users.ser");
+            LOGGER.info("Users loaded from users.ser");
             printList();
         }
     }
 
     private static void printList() {
-        users.forEach(user -> System.out.println(user.toString()));
+        users.forEach(user -> LOGGER.info(user.toString()));
     }
 
     public static boolean addUser(User newUser) {
         if (users.contains(newUser)) {
             return false;
         }
+        LOGGER.info("Addig new user {}", newUser.toString());
         users.add(newUser);
         return true;
     }
@@ -80,6 +86,7 @@ public class UserManager {
         if (user != null) {
             isValid = password.equals(user.getPassword());
         }
+        LOGGER.info("Validation success: {}, for email {} with password {}", isValid, email, password);
         return isValid;
     }
 

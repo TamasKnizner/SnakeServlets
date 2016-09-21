@@ -2,9 +2,14 @@ package com.epam.training.snake.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.epam.training.snake.entity.User;
 
 public class SessionManager {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionManager.class);
 
     public static boolean isLoggedIn(HttpServletRequest request) {
 
@@ -15,6 +20,7 @@ public class SessionManager {
     }
 
     public static void logout(HttpServletRequest request) {
+        LOGGER.info("Loggin out user {}", getUserFromSession(request));
         request.getSession(true).setAttribute("loggedIn", false);
         request.getSession().removeAttribute("user");
         request.getSession().removeAttribute("isAdmin");

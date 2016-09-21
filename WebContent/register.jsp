@@ -18,12 +18,16 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
+<style type="text/css">body { padding-top: 70px; }</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<a href="/snake/logout" class="btn btn-default navbar-btn pull-right">Logout</a>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="/snake/leaderboard">Leaderboard</a></li>
+				<li><a href="/snake/logout">Logout</a></li>
+			</ul>
 		</div>
 	</nav>
 	<div class="container">
